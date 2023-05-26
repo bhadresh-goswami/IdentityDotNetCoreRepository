@@ -1,5 +1,8 @@
 ﻿using Demo_Repo.Models;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using TSB.Domain.IdentityContext;
 using TSB.Repository.IRepository;
 
 namespace Demo_Repo.Controllers
@@ -7,9 +10,11 @@ namespace Demo_Repo.Controllers
     public class UserController : Controller
     {
         IUserRepository _userRepository;
-        public UserController(IUserRepository userRepository)
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        public UserController(IUserRepository userRepository, SignInManager<ApplicationUser> signInManager)
         {
             _userRepository = userRepository;
+            _signInManager = signInManager;
         }
         public IActionResult Index()
         {
@@ -27,6 +32,31 @@ namespace Demo_Repo.Controllers
             }, "Admin");
 
 
+            return View();
+        }
+
+        public IActionResult SignIn()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> SignIn(UserVM user)
+        {
+            var resultUser =  await _userRepository.SignIn(new TSB.Domain.IdentityContext.ApplicationUser()
+            {
+                Email = user.EmailId,
+                PasswordHash = user.Password
+            });
+
+            if (resultUser != null)
+            {
+                //email id is valid
+                var signInResult = await _signInManager.PasswordSignInAsync(user, resultUser.PasswordHash, isPersistent: false, lockoutOnFailure: false);
+                if (signInResult != null)
+                {
+                    //sign in done
+                }
+            }
             return View();
         }
     }
