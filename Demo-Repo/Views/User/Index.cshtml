@@ -1,0 +1,43 @@
+﻿@model Demo_Repo.Models.UserVM
+
+<form method="post" asp-action="Index" asp-asp-controller="user">
+<table>
+    <tr>
+        <th>
+            Enter User Name
+        </th>
+        <td>
+            <input type="text" name="UserName" class="form-control" />
+        </td>
+    </tr>
+    <tr>
+        <th>
+            Enter Email Id
+        </th>
+        <td>
+            <input type="email" name="EmailId" class="form-control" />
+        </td>
+    </tr>
+    <tr>
+        <th>
+            Enter Password
+        </th>
+        <td>
+            <input type="password" name="Password" class="form-control" />
+        </td>
+    </tr>
+    <tr>
+        <th>
+            Enter User Name
+        </th>
+        <td>
+            <input type="password" name="ConfirmPassword" class="form-control" />
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <button type="submit" class="btn btn-info">Save</button>
+        </td>
+    </tr>
+</table>
+</form>
