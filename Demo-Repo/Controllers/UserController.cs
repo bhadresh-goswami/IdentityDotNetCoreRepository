@@ -51,10 +51,11 @@ namespace Demo_Repo.Controllers
             if (resultUser != null)
             {
                 //email id is valid
-                var signInResult = await _signInManager.PasswordSignInAsync(user, resultUser.PasswordHash, isPersistent: false, lockoutOnFailure: false);
-                if (signInResult != null)
+                var signInResult = await _signInManager.PasswordSignInAsync(resultUser, resultUser.PasswordHash, isPersistent: false, lockoutOnFailure: false);
+                if (signInResult.Succeeded)
                 {
                     //sign in done
+                    var userR = User;
                 }
             }
             return View();
